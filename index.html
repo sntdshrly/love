@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday, Bubu!</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn-icons-png.flaticon.com/512/833/833472.png"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #ffe6f0;
+        text-align: center;
+        margin: 0;
+        padding: 30px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .container {
+        background: #fff;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        margin: 0 auto;
+        z-index: 2;
+        position: relative;
+      }
+
+      h1 {
+        color: #d63384;
+        margin-top: 0;
+      }
+
+      .hearts {
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .hearts span {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 2px solid #d63384;
+        font-size: 22px;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+      }
+
+      .keypad {
+        display: grid;
+        grid-template-columns: repeat(3, 60px);
+        grid-gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .keypad button {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: none;
+        font-size: 20px;
+        background: #fcd6e1;
+        color: #d63384;
+        cursor: pointer;
+      }
+
+      .emoji-heart {
+        position: absolute;
+        animation: fall 5s linear infinite;
+        opacity: 0.8;
+        z-index: 1;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-50px) rotate(0deg);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .together-counter {
+        margin-top: 30px;
+        font-size: 1em;
+        color: #d63384;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hearts container -->
+    <div id="hearts-container"></div>
+
+    <!-- Main white container -->
+    <div class="container">
+      <h1>Happy Birthday</h1>
+      <div class="hearts" id="codeDisplay">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="keypad">
+        <button onclick="pressNumber('1')">1</button>
+        <button onclick="pressNumber('2')">2</button>
+        <button onclick="pressNumber('3')">3</button>
+        <button onclick="pressNumber('4')">4</button>
+        <button onclick="pressNumber('5')">5</button>
+        <button onclick="pressNumber('6')">6</button>
+        <button onclick="pressNumber('7')">7</button>
+        <button onclick="pressNumber('8')">8</button>
+        <button onclick="pressNumber('9')">9</button>
+        <button onclick="clearCode()">❌</button>
+        <button onclick="pressNumber('0')">0</button>
+        <button onclick="submitCode()">🔒</button>
+      </div>
+
+      <!-- Together counter -->
+      <div class="together-counter" id="togetherCounter"></div>
+    </div>
+
+    <script>
+      let code = "";
+      const maxDigits = 4;
+      const correctCode = "4215";
+
+      function pressNumber(num) {
+        if (code.length < maxDigits) {
+          code += num;
+          updateHearts();
+        }
+      }
+
+      function updateHearts() {
+        const hearts = document.querySelectorAll("#codeDisplay span");
+        hearts.forEach((heart, idx) => {
+          heart.textContent = idx < code.length ? "❤️" : "";
+        });
+      }
+
+      function clearCode() {
+        code = "";
+        updateHearts();
+      }
+
+      function submitCode() {
+        const today = new Date();
+        const bday = new Date("2025-08-11T00:00:00");
+
+        if (today < bday) {
+          alert(
+            "Patience! You can only open this on your birthday, August 11, 2025! ❤️"
+          );
+          clearCode();
+          return;
+        }
+
+        if (code === correctCode) {
+          window.location.href = "main.html";
+        } else {
+          alert("Get out, you are not my Bubu! 😡");
+          clearCode();
+        }
+      }
+
+      // Raining ❤️ hearts effect
+      const heartsContainer = document.getElementById("hearts-container");
+
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("emoji-heart");
+        heart.textContent = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = 16 + Math.random() * 24 + "px";
+        heart.style.animationDuration = 3 + Math.random() * 2 + "s";
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }
+
+      setInterval(createHeart, 200);
+
+      // Together since counter
+      function updateTogetherCounter() {
+        const startDate = new Date("2024-05-17T00:00:00");
+        const now = new Date();
+        const diffTime = now - startDate;
+
+        const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diffTime / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diffTime / (1000 * 60)) % 60);
+        const seconds = Math.floor((diffTime / 1000) % 60);
+
+        document.getElementById(
+          "togetherCounter"
+        ).textContent = `We've been together for ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds and still counting! ❤️`;
+      }
+
+      setInterval(updateTogetherCounter, 1000);
+    </script>
+  </body>
+</html>

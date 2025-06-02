@@ -16,7 +16,7 @@
         text-align: center;
         color: #d63384;
         margin: 0;
-        padding: 10px 20px 60px 20px; /* adjusted for smaller screens */
+        padding: 60px 20px 60px 20px; /* Tambahkan padding-top agar tidak tertutup logout button */
         overflow-x: hidden;
         position: relative;
       }
@@ -43,7 +43,7 @@
         background: #fff;
         border-radius: 20px;
         width: 100%;
-        aspect-ratio: 1/1; /* keeps it square */
+        aspect-ratio: 1/1;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         cursor: pointer;
         transition: transform 0.2s, box-shadow 0.2s;
@@ -106,24 +106,23 @@
 
       .logout-btn {
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: 10px;
+        right: 10px;
         background: #d63384;
         color: #fff;
         border: none;
         border-radius: 20px;
-        padding: 10px 20px;
-        font-size: 1em;
+        padding: 8px 16px;
+        font-size: 0.9em;
         cursor: pointer;
         transition: background 0.3s;
-        z-index: 2;
+        z-index: 999; /* Tetap di atas semua elemen */
       }
 
       .logout-btn:hover {
         background: #c0266b;
       }
 
-      /* Responsive adjustments */
       @media (max-width: 600px) {
         .container {
           gap: 15px;
@@ -138,8 +137,10 @@
         }
 
         .logout-btn {
-          padding: 8px 16px;
-          font-size: 0.9em;
+          padding: 6px 14px;
+          font-size: 0.85em;
+          top: 10px;
+          right: 10px;
         }
       }
     </style>
@@ -197,7 +198,7 @@
           <img
             src="https://cdn-icons-png.flaticon.com/512/833/833472.png"
             alt="Envelope"
-            style="width: 80%; margin-top: 10px; border-radius: 10px"
+            style="width: 95%; margin-top: 10px; border-radius: 10px"
           />
         </div>
       </div>
